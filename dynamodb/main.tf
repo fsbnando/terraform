@@ -1,11 +1,25 @@
-resource "aws_dynamodb_table" "basic-dynamodb-table" {
-  name           = "terraform"
-  read_capacity  = 10
-  write_capacity = 10
-  hash_key       = "LockID"
+data "aws_ami" "ubuntu" {
+  most_recent = true
 
-  attribute {
-    name = "LockID"
-    type = "S"
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "HelloWorld"
+    env  = "HML"
   }
 }

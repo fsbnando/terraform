@@ -1,3 +1,5 @@
 module "EC2" {
-source = "./instancia"
+  source = "./instancia"
+  nome =   "maquina EC2"
+  enviroment = "Prodiction"
 }

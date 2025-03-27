@@ -3,3 +3,8 @@ module "EC2" {
   nome =   "maquina EC2"
   enviroment = "Prodiction"
 }
+
+moved {
+  from = module.EC2.aws_instance.web
+  to   = module.EC2.aws_instance.this
+}
